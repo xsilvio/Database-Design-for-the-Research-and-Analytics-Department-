@@ -1,0 +1,127 @@
+MariaDB [(none)]> CREATE DATABASE IF NOT EXISTS e_store;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> USE e_store;
+Database changed
+
+MariaDB [e_store]> CREATE TABLE IF NOT EXISTS employees(
+    ->     employee_id INTEGER AUTO_INCREMENT NOT NULL,
+    ->     first_name VARCHAR(50) NOT NULL,
+    ->     last_name VARCHAR(50) NOT NULL,
+    ->     category VARCHAR(50) NOT NULL,
+    ->     PRIMARY KEY (employee_id)
+    ->     );
+Query OK, 0 rows affected, 0 warning (0.206 sec)
+
+MariaDB [e_store]> INSERT INTO employees(first_name, last_name, category)
+    -> VALUES
+    -> ("Debo","Adejumo","Solar"),
+    -> ("Charles","Olabanji","Fitness"),
+    -> ("James","Love","Security");
+Query OK, 3 rows affected (0.052 sec)
+Records: 0 Duplicates: 0  Warnings: 0
+
+MariaDB [e_store]> CREATE TABLE IF NOT EXISTS products(
+    ->     product_id INTEGER AUTO_INCREMENT NOT NULL,
+    ->     product_name VARCHAR(50) NOT NULL,
+    ->     description VARCHAR(50) NOT NULL,
+    ->     product_category VARCHAR(50) NOT NULL,
+    ->     unit_price INT NOT NULL,
+    ->     quantity INT NOT NULL,
+    ->     PRIMARY KEY (product_id);
+Query OK, 0 rows affected, 0 warning (0.136 sec)
+
+MariaDB [e_store]> INSERT INTO products(product_name, description, product_category, unit_price, quantity)
+    -> VALUES
+    -> ("Sunny and Power I","real time monitoring of energy usage in residential","solar","230000", "28"),
+    -> ("Fits and Moves I","health wristwatch electric","fitness","48000","16"),
+    -> ("homeSecure","home security system for residential","security","136000","75"),
+    -> ("Sunny and Power II","real time monitoring of energy usage in industrial","solar","235000","38"),
+    -> ("Fits and Moves II","health wristwatch solar and electric","fitness","75000" "55");
+Query OK, 5 rows affected (0.076 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [e_store]> CREATE TABLE IF NOT EXISTS orders(
+    ->    order_id INTEGER AUTO_INCREMENT NOT NULL,
+    ->    multiple_product_order VARCHAR(45) DEFAULT 0,
+    ->    order_date DATE NOT NULL,
+    ->    order_quantity INT NOT NULL,
+
+    ->    delivery_status VARCHAR(45) NOT NULL,
+    ->    payment_option VARCHAR(45) NOT NULL,
+    ->    PRIMARY KEY(order_id),  
+    ->    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    ->    FOREIGN KEY (product_id) REFERENCES employees(employee_id),
+    ->    FOREIGN KEY (employee_id) REFERENCES products(product_id)
+    ->    );
+
+Query OK, 0 rows affected, 0 warning (0.150 sec)
+
+MariaDB [e_store]> INSERT INTO orders(customer_id, product_id, multiple_product_order, order_date, order_quantity, delivery_status, payment_option, employeer_id)
+    -> VALUES
+    -> (3, 1,  ,"2023-03-10", 2, "credit card", "delivered", 1),
+    -> (4, 3,  ,"2023-01-10", 1, "credit card", "delivered", 3),
+    -> (6, 4,  ,"2023-02-03", 1, "credit card", "not delivered", 1),
+    -> (7, 2,  ,"2023-02-04", 5, "credit card", "not delivered", 2),
+    -> (1, 2,  ,"2023-03-12", 10, "credit card", "delivered", 2),
+    -> (2, 3,  ,"2023-02-03", 2, "credit card", "delivered", 3),
+
+Query OK, 6 rows affected (0.101 sec)
+Records: 26  Duplicates: 0  Warnings: 0
+
+MariaDB [e_store]>  CREATE TABLE IF NOT EXISTS customers(
+    ->     customer_id INTEGER AUTO_INCREMENT NOT NULL,
+    ->     first_name VARCHAR(50) NOT NULL,
+    ->     last_name VARCHAR(50) NOT NULL,
+    ->     phone_number VARCHAR(11) NOT NULL,
+    ->     city VARCHAR(50) NOT NULL,
+    ->     state VARCHAR(50) NOT NULL,
+    ->    PRIMARY KEY (customer_id)
+    ->    );
+Query OK, 0 rows affected, 0 warning (0.062 sec)
+
+MariaDB [e_store]> INSERT INTO customers(first_name, last_name, phone_number, city, state)
+    -> VALUES
+    -> ("Faith","Adeyemi","09138887290","Osogbo","Osun"),
+    -> ("Tolu","Odu","081221110511","Port Harcourt","Rivers"),
+    -> ("Justina","Ara","09078709950","Ilorin","Kwara"),
+    -> ("Damilare","Nmadu","08169066030","Ojo","Lagos"),
+    -> ("Ife","Brown","07040323364","Festac","Lagos"),
+    -> ("El","Bj","08113775604","Iseyin","Oyo"),
+    -> ("Chris","Korie","08083503449","Shagamu","Ogun");
+Query OK, 7 rows affected (0.086 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+
+
+
+QUERIES
+
+MariaDB [e_store]> SELECT * FROM customers WHERE state="Lagos";
++-------------+------------+-----------+---------------+-----------------+---------+---------+
+| customer_id | first_name | last_name | phone_number | city    | state |
++-------------+------------+-----------+---------------+-----------------+---------+---------+
+|           4 | Damilare    | Nmadu      | 08169066030 | Ojo | Lagos   |
+|           5 | Ife   | Brown   | 07040323364  | Festac | Lagos   |
++-------------+------------+-----------+---------------+-----------------+---------+---------+
+2 rows in set (0.031 sec)
+
+MariaDB [e_store]> SELECT * FROM products WHERE product_category like "solar";
++------------+-----------+------------------------+------------+--------------+----------+-------+--------------+
+| product_id | product_name | description  | product_category      | unit_price | quantity |
++------------+-----------+------------------------+------------+--------------+----------+-------+--------------+
+| 1 | Sunny and Power I | real time monitoring of energy usage in residential | solar | 230000 | 28 |
+| 4 | Sunny and Power II | real time monitoring of energy usage in industrial | solar| 235000 | 38 |
++------------+-----------+------------------------+------------+--------------+----------+-------+--------------+
+2 rows in set (0.000 sec)
+
+MariaDB [e_store]> SELECT COUNT(state) FROM customers WHERE state =("Lagos");
++-------------+
+| COUNT(state) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.000 sec)
+
