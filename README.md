@@ -1,5 +1,5 @@
 # Database-Design-for-the-Research-and-Analytics-Department-
-A Database Design and SQL Scripts for an online store of the Research & Analytics Department of Ampersand Holdings.  The Research & Analytics online store sells Data Products: Hardware and Software which includes Solar Energy Usage Monitoring Systems, Fitness Tracking Devices and Home Security Systems.
+A Database Design and SQL Scripts for an online store of the Research & Analytics Department.  The Research & Analytics online store sells Data Products: Hardware and Software which includes Solar Energy Usage Monitoring Systems, Fitness Tracking Devices and Home Security Systems.
 This Database was designed considering the following use case specification:
 • Employees from the Research & Analytics department control the products according to the categories and an employee is responsible for collecting the products for delivery
 • The product categories are Solar Energy Usage Monitoring Systems, Fitness Tracking Devices and Home Security Systems.
